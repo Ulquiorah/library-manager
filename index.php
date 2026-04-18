@@ -4,43 +4,39 @@ require_once "config/database.php";
 $css = "style.css";
 include "partials/header.php";
 
-if(isset($_POST["login"])){
-    if(!empty($_POST['email'] && !empty($_POST['password'])));
-    {
-        $email = filter_var($_POST['email'],FILTER_VALIDATE_EMAIL);
-        $pass = htmlspecialchars($_POST["password"]); 
-$sql ="SELECT * FROM users WHERE email=?";
-$req = $db->prepare($sql);
-$req->execute([$email]);
+if (isset($_POST["login"])) {
+    if (!empty($_POST['email']) && !empty($_POST['password'])) {
+        $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+        $pass = htmlspecialchars($_POST["password"]);
 
-// on verifie si les données correspondent a celui dans la bdd
-if($req->rowCount()>0)
-{
-    $users = $req->fetch(PDO::FETCH_ASSOC);
-    // on verifie si le mdp correspond dans la bdd
-    if(password_verify($pass,$users['password']))
-    {
+        $sql = "SELECT * FROM users WHERE email=?";
+        $req = $db->prepare($sql);
+        $req->execute([$email]);
 
-        // on définit une session pour l'userr
-        $_SESSION['user'] = [
-            'id'=>$user['id'],
-            'nom'=>$user['nom'],
-            'email'=>$user['email'],
-            'contact'=>$user['contact'],
-            'password'=>$user['password']
+        // on verifie si les donnees correspondent a celui dans la bdd
+        if ($req->rowCount() > 0) {
+            $users = $req->fetch(PDO::FETCH_ASSOC);
 
-        ];
-        header("location:article.php");
-    }
-    else{
-        echo"mot de passe incorrect";
-    }
-    }
-    else{
-        echo"email incorrect";
-    }
+            // on verifie si le mdp correspond dans la bdd
+            if (password_verify($pass, $users['password'])) {
+                // on definit une session pour l'user
+                $_SESSION['user'] = [
+                    'id' => $users['id'],
+                    'nom' => $users['nom'],
+                    'email' => $users['email'],
+                    'contact' => $users['contact'],
+                    'password' => $users['password']
+                ];
 
-}
+                header("location:article.php");
+                exit;
+            } else {
+                echo "mot de passe incorrect";
+            }
+        } else {
+            echo "email incorrect";
+        }
+    }
 }
 ?>
 <div class="container-fluid h-100 bg-dark py-5">
