@@ -9,13 +9,12 @@ $articles = $req->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<!-- Systeme CRUD : Create Read Update Delete -->
 <div class="container py-4">
-    <h1 class="text-center mb-4">Listes des articles</h1>
+    <h1 class="text-center mb-4">Liste des livres</h1>
 
     <div class="d-flex flex-wrap gap-2 mb-3 justify-content-center justify-content-md-start">
         <a href="register.php" class="btn btn-outline-secondary">S'inscrire</a>
-        <a href="create.php" class="btn btn-success">Ajouter</a>
+        <a href="create.php" class="btn btn-success">Ajouter un livre</a>
         <a href="logout.php" class="btn btn-primary">Deconnexion</a>
     </div>
 
@@ -33,15 +32,15 @@ $articles = $req->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($articles as $a) : ?>
+                        <?php foreach ($articles as $a) : ?>
                         <tr>
                             <td><?= $a["id"] ?></td>
                             <td><?= $a["titre"] ?></td>
                             <td><?= $a["description"] ?></td>
                             <td><?= $a["photo"] ?></td>
                             <td class="d-flex flex-wrap gap-2">
-                                <a href="edit.php?id=<?= $a["id"] ?>" class="btn btn-sm btn-info">Editer</a>
-                                <a href="delete.php?id=<?= $a["id"] ?>" class="btn btn-sm btn-danger">Supprimer</a>
+                                <a href="edit.php?id=<?= $a["id"] ?>" class="btn btn-sm btn-info">Modifier</a>
+                                <a href="delete.php?id=<?= $a["id"] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce livre ?');">Supprimer</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
