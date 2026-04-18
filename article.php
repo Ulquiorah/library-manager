@@ -10,44 +10,44 @@ $articles = $req->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- Systeme CRUD : Create Read Update Delete -->
-    <div class="container">
-    <h1 class="text-center ">Listes des articles</h1>
-    <a href="register.php?id=<?=$a["id"]?>" class="">S'inscrire</a>
-    <a href="logout.php" class="btn btn-primary">Deconnexion</a>
-    
+<div class="container py-4">
+    <h1 class="text-center mb-4">Listes des articles</h1>
 
-    <a href="create.php">Ajout</a>
+    <div class="d-flex flex-wrap gap-2 mb-3 justify-content-center justify-content-md-start">
+        <a href="register.php" class="btn btn-outline-secondary">S'inscrire</a>
+        <a href="create.php" class="btn btn-success">Ajouter</a>
+        <a href="logout.php" class="btn btn-primary">Deconnexion</a>
+    </div>
+
     <div class="row">
-    <div class="col-md-12">
-    <table class="table table-light bg-light">
-    <thead>
-    <tr>
-    <td>Id</td>
-    <td>Titre</td>
-    <td>Description</td>
-    <td>Photo</td>
-    <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach($articles as $a) : ?>
-    <tr>
-    <!--le ao anaty colonne -->
-    <td> <?= $a["id"]?></td>
-    <td><?= $a["titre"]?></td>
-    <td><?= $a["description"]?></td>
-    <td><?= $a["photo"]?></td>
-    <td>
-    <a href="create.php" class="btn btn-primary">Ajouter</a>
-    <a href="delete.php?id=<?=$a["id"]?>" class="btn btn-danger">Supprimer</a>
-    <a href="edit.php?id=<?=$a["id"]?>" class="btn btn-info">Editer</a>
-   
-    </td>
-    </tr>
-    <?php endforeach; ?>
-    </tbody>
-    </table>
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-light bg-light table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Photo</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($articles as $a) : ?>
+                        <tr>
+                            <td><?= $a["id"] ?></td>
+                            <td><?= $a["titre"] ?></td>
+                            <td><?= $a["description"] ?></td>
+                            <td><?= $a["photo"] ?></td>
+                            <td class="d-flex flex-wrap gap-2">
+                                <a href="edit.php?id=<?= $a["id"] ?>" class="btn btn-sm btn-info">Editer</a>
+                                <a href="delete.php?id=<?= $a["id"] ?>" class="btn btn-sm btn-danger">Supprimer</a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    </div>
-    </div>
-  
+</div>
