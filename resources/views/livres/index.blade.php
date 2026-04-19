@@ -9,9 +9,11 @@
             <h1 class="h2">Gestion des livres</h1>
         </div>
         <div class="col-md-4 text-end">
+            @if(auth()->user()->role_id >= 2)
             <a href="{{ route('livres.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Ajouter un livre
             </a>
+            @endif
         </div>
     </div>
 
@@ -54,13 +56,15 @@
                             </div>
                         </div>
 
-                        <div class="btn-group w-100" role="group">
+                        <div class="d-grid gap-2">
                             <a href="{{ route('livres.show', $livre) }}" class="btn btn-outline-primary btn-sm">
                                 Voir
                             </a>
+                            @if(auth()->user()->role_id >= 2)
                             <a href="{{ route('livres.edit', $livre) }}" class="btn btn-outline-secondary btn-sm">
                                 Modifier
                             </a>
+                            @endif
                         </div>
                     </div>
                 </div>

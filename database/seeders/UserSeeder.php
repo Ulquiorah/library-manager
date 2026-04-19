@@ -13,18 +13,20 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::firstOrCreate(
-            ['email' => 'admin@example.com'],
+            ['email' => 'biblio@example.com'],
             [
-                'nom' => 'Admin Test',
-                'contact' => '06 00 00 00 00',
+                'name' => 'Bibliothécaire Test',
+                'nom' => 'Bibliothécaire Test',
+                'contact' => '06 22 22 22 22',
                 'password' => bcrypt('password'),
-                'role_id' => 3, // admin
+                'role_id' => 2, // librarian
             ]
         );
 
         \App\Models\User::firstOrCreate(
             ['email' => 'user@example.com'],
             [
+                'name' => 'Utilisateur Test',
                 'nom' => 'Utilisateur Test',
                 'contact' => '06 11 11 11 11',
                 'password' => bcrypt('password'),

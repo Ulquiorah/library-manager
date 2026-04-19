@@ -100,6 +100,7 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="editeur" class="form-label">Éditeur</label>
                             <input type="text" class="form-control @error('editeur') is-invalid @enderror"
                                    id="editeur" name="editeur" value="{{ old('editeur', $livre->editeur) }}">
                             @error('editeur')

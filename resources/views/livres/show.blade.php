@@ -10,9 +10,11 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="mb-0">{{ $livre->titre }}</h4>
                     <div>
+                        @if(auth()->user()->role_id >= 2)
                         <a href="{{ route('livres.edit', $livre) }}" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-edit"></i> Modifier
                         </a>
+                        @endif
                         <a href="{{ route('livres.index') }}" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-arrow-left"></i> Retour
                         </a>
@@ -119,12 +121,6 @@
                     <h6 class="mb-0">Actions administrateur</h6>
                 </div>
                 <div class="card-body">
-                    @if($livre->quantite_disponible > 0)
-                        <button class="btn btn-success btn-sm w-100 mb-2" disabled>
-                            <i class="fas fa-plus"></i> Emprunter (fonctionnalité à venir)
-                        </button>
-                    @endif
-
                     <form method="POST" action="{{ route('livres.destroy', $livre) }}"
                           onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')">
                         @csrf
@@ -133,6 +129,24 @@
                             <i class="fas fa-trash"></i> Supprimer le livre
                         </button>
                     </form>
+                </div>
+            </div>
+            @else
+            <!-- Actions utilisateur -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h6 class="mb-0">Actions</h6>
+                </div>
+                <div class="card-body">
+                    @if($livre->quantite_disponible > 0)
+                        <button class="btn btn-success btn-sm w-100 mb-2" disabled>
+                            <i class="fas fa-plus"></i> Emprunter (fonctionnalité à venir)
+                        </button>
+                    @else
+                        <button class="btn btn-secondary btn-sm w-100 mb-2" disabled>
+                            <i class="fas fa-ban"></i> Indisponible
+                        </button>
+                    @endif
                 </div>
             </div>
             @endif

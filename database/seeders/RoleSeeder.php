@@ -13,8 +13,13 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         // Vérifier et insérer les rôles uniquement s'ils n'existent pas
-        \App\Models\Role::firstOrCreate(['type' => 'user']);
-        \App\Models\Role::firstOrCreate(['type' => 'librarian']);
-        \App\Models\Role::firstOrCreate(['type' => 'admin']);
+        \App\Models\Role::firstOrCreate(
+            ['id' => 1],
+            ['type' => 'user', 'description' => 'Utilisateur simple']
+        );
+        \App\Models\Role::firstOrCreate(
+            ['id' => 2],
+            ['type' => 'librarian', 'description' => 'Bibliothécaire']
+        );
     }
 }

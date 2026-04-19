@@ -54,16 +54,19 @@
         <div class="col-md-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Mes emprunts actuels</h5>
+                    <h5 class="mb-0">{{ auth()->user()->role_id >= 2 ? 'Emprunts en cours' : 'Mes emprunts actuels' }}</h5>
                 </div>
                 <div class="card-body">
                     @if($currentLoans->isEmpty())
-                        <p class="text-muted text-center py-4">Aucun emprunt pour le moment</p>
+                        <p class="text-muted text-center py-4">{{ auth()->user()->role_id >= 2 ? 'Aucun emprunt en cours' : 'Aucun emprunt pour le moment' }}</p>
                     @else
                         <ul class="list-group list-group-flush">
                             @foreach($currentLoans as $loan)
                                 <li class="list-group-item">
                                     <strong>{{ $loan->livre->titre ?? 'Livre inconnu' }}</strong>
+                                    @if(auth()->user()->role_id >= 2)
+                                        <div class="small text-muted">Emprunté par : {{ $loan->user->nom }}</div>
+                                    @endif
                                     <div class="small text-muted">
                                         Retour prévu le {{ $loan->date_retour_prevue->format('d/m/Y') }}
                                     </div>
