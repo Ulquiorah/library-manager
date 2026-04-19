@@ -51,6 +51,9 @@
                         <a class="nav-link" href="{{ route('dashboard') }}">Tableau de bord</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('livres.index') }}">Livres</a>
+                    </li>
+                    <li class="nav-item">
                         <span class="nav-link">{{ auth()->user()->nom }}</span>
                     </li>
                     <li class="nav-item">

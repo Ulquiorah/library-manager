@@ -100,7 +100,7 @@
                 </div>
                 <div class="card-body">
                     <div class="btn-group" role="group">
-                        <a href="#" class="btn btn-outline-primary">Gérer les livres</a>
+                        <a href="{{ route('livres.index') }}" class="btn btn-outline-primary">Gérer les livres</a>
                         <a href="#" class="btn btn-outline-primary">Voir les emprunts</a>
                         <a href="#" class="btn btn-outline-primary">Gérer les pénalités</a>
                     </div>
