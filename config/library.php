@@ -5,76 +5,38 @@
  */
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Durée de l'emprunt (en jours)
-    |--------------------------------------------------------------------------
-    | Nombre de jours par défaut pour emprunter un livre
-    */
+    // Durée de l'emprunt en jours (par défaut)
     'borrow_duration' => env('LIBRARY_BORROW_DURATION', 30),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Montant de la pénalité par jour (en €)
-    |--------------------------------------------------------------------------
-    | Montant appliqué par jour de retard
-    */
+    // Montant de la pénalité par jour en euros
     'penalty_per_day' => env('LIBRARY_PENALTY_PER_DAY', 1),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Jours avant le retour pour notification
-    |--------------------------------------------------------------------------
-    | Nombre de jours avant la date de retour pour envoyer un rappel
-    */
+    // Nombre de jours avant la date de retour pour envoyer un rappel
     'notification_days_before' => env('LIBRARY_NOTIFICATION_DAYS_BEFORE', 3),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Nombre maximum de livres par utilisateur
-    |--------------------------------------------------------------------------
-    | Nombre maximum de livres qu'un utilisateur peut emprunter simultanément
-    */
+    // Nombre maximum de livres qu'un utilisateur peut emprunter
     'max_books_per_user' => env('LIBRARY_MAX_BOOKS_PER_USER', 5),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Montant maximum de pénalité
-    |--------------------------------------------------------------------------
-    | Montant maximum de pénalité qui peut être appliqué à un emprunt
-    */
+    // Montant maximum de pénalité applicable à un emprunt
     'max_penalty_amount' => 50,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Réductions basées sur les catégories
-    |--------------------------------------------------------------------------
-    | Durée d'emprunt spécifique pour certaines catégories (ex: livres rares)
-    */
+    // Durée d'emprunt spécifique selon la catégorie du livre
     'category_durations' => [
-        'rare' => 14,      // Les livres rares: 14 jours
-        'reference' => 7,  // Les livres de référence: 7 jours
+        'rare' => 14,      // Livres rares
+        'reference' => 7,  // Livres de référence
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Statuts d'emprunt
-    |--------------------------------------------------------------------------
-    */
+    // Statuts possibles d'un emprunt
     'borrow_statuses' => [
         'en_cours' => 'en_cours',
         'retourne' => 'retourne',
         'retard' => 'retard',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Rôles utilisateur
-    |--------------------------------------------------------------------------
-    */
+    // Rôles utilisateur disponibles
     'roles' => [
-        'user' => 1,        // Utilisateur normal
+        'user' => 1,        // Utilisateur
         'librarian' => 2,   // Bibliothécaire
-        'admin' => 3,       // Administrateur
+        'admin' => 3,       // Admin
     ],
 ];
