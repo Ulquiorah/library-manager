@@ -138,14 +138,19 @@
                     <h6 class="mb-0">Actions</h6>
                 </div>
                 <div class="card-body">
-                    @if($livre->quantite_disponible > 0)
-                        <button class="btn btn-success btn-sm w-100 mb-2" disabled>
-                            <i class="fas fa-plus"></i> Emprunter (fonctionnalité à venir)
-                        </button>
-                    @else
-                        <button class="btn btn-secondary btn-sm w-100 mb-2" disabled>
-                            <i class="fas fa-ban"></i> Indisponible
-                        </button>
+                    @if(auth()->user()->role_id < 2)
+                        @if($livre->quantite_disponible > 0)
+                            <form action="{{ route('livres.emprunter', $livre) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm w-100 mb-2">
+                                    <i class="fas fa-plus"></i> Emprunter
+                                </button>
+                            </form>
+                        @else
+                            <button class="btn btn-secondary btn-sm w-100 mb-2" disabled>
+                                <i class="fas fa-ban"></i> Indisponible
+                            </button>
+                        @endif
                     @endif
                 </div>
             </div>
