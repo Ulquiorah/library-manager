@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row mb-4">
         <div class="col-md-8">
-            <h1 class="h2">Bienvenue, {{ auth()->user()->nom }} ! 👋</h1>
+            <h1 class="h2">Bienvenue, {{ auth()->user()->nom }} !</h1>
             <p class="text-muted">Rôle: <strong>{{ auth()->user()->role->type ?? 'Utilisateur' }}</strong></p>
         </div>
     </div>
@@ -54,7 +54,7 @@
         <div class="col-md-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">📖 Mes emprunts actuels</h5>
+                    <h5 class="mb-0">Mes emprunts actuels</h5>
                 </div>
                 <div class="card-body">
                     <p class="text-muted text-center py-4">Aucun emprunt pour le moment</p>
@@ -65,7 +65,7 @@
         <div class="col-md-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-warning text-dark">
-                    <h5 class="mb-0">⚠️ Pénalités</h5>
+                    <h5 class="mb-0">Pénalités</h5>
                 </div>
                 <div class="card-body">
                     <p class="text-muted text-center py-4">Aucune pénalité</p>
@@ -79,7 +79,7 @@
         <div class="col-md-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">⚙️ Administration</h5>
+                    <h5 class="mb-0">Administration</h5>
                 </div>
                 <div class="card-body">
                     <div class="btn-group" role="group">

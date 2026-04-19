@@ -8,7 +8,7 @@
         <div class="col-md-6 col="lg-5">
             <div class="card shadow-lg border-0">
                 <div class="card-body p-5">
-                    <h1 class="text-center h3 mb-4 text-primary">✍️ S'inscrire</h1>
+                    <h1 class="text-center h3 mb-4 text-primary">S'inscrire</h1>
                     
                     <form method="POST" action="{{ route('register') }}" class="needs-validation">
                         @csrf
