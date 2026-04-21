@@ -261,7 +261,7 @@
                                             <strong>{{ $penalite->emprunt->livre->titre }}</strong><br>
                                             <small class="text-muted">{{ $penalite->emprunt->livre->auteur }}</small>
                                         </td>
-                                        <td>{{ $penalite->date_creation->format('d/m/Y') }}</td>
+                                        <td>{{ $penalite->date_application->format('d/m/Y') }}</td>
                                         <td>{{ number_format($penalite->montant, 2, ',', ' ') }}€</td>
                                         <td>
                                             @if($penalite->payee)

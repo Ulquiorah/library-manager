@@ -53,11 +53,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('livres.index') }}">Livres</a>
                     </li>
-                    @if(auth()->user()->role_id >= 2)
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('emprunts.index') }}">Gestion emprunts</a>
-                    </li>
-                    @endif
                     <li class="nav-item">
                         <span class="nav-link">{{ auth()->user()->nom }}</span>
                     </li>

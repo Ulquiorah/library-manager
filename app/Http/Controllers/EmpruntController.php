@@ -84,7 +84,7 @@ class EmpruntController extends Controller
                 $emprunt->penalite()->create([
                     'montant' => $montant,
                     'payee' => false,
-                    'date_creation' => $dateRetour,
+                    'date_application' => $dateRetour,
                 ]);
             }
         }
@@ -95,56 +95,5 @@ class EmpruntController extends Controller
         }
 
         return redirect()->back()->with('success', $message);
-    }
-
-    public function index()
-    {
-        $user = Auth::user();
-
-        if ($user->role_id < 2) {
-            return redirect()->route('dashboard')->with('error', 'Accès non autorisé.');
-        }
-
-        // Statistiques
-        $stats = [
-            'total_emprunts' => Emprunt::count(),
-            'emprunts_en_cours' => Emprunt::where('statut', config('library.borrow_statuses.en_cours'))->count(),
-            'emprunts_en_retard' => Emprunt::where('statut', config('library.borrow_statuses.en_cours'))
-                ->where('date_retour_prevue', '<', now())->count(),
-            'penalites_total' => \App\Models\Penalite::where('payee', false)->sum('montant'),
-        ];
-
-        // Emprunts en cours
-        $empruntsEnCours = Emprunt::with(['user', 'livre'])
-            ->where('statut', config('library.borrow_statuses.en_cours'))
-            ->orderBy('date_retour_prevue')
-            ->paginate(20, ['*'], 'en_cours_page');
-
-        // Emprunts en retard
-        $empruntsEnRetard = Emprunt::with(['user', 'livre'])
-            ->where('statut', config('library.borrow_statuses.en_cours'))
-            ->where('date_retour_prevue', '<', now())
-            ->orderBy('date_retour_prevue')
-            ->paginate(20, ['*'], 'retard_page');
-
-        // Historique des emprunts
-        $historiqueEmprunts = Emprunt::with(['user', 'livre', 'penalite'])
-            ->where('statut', '!=', config('library.borrow_statuses.en_cours'))
-            ->orderBy('date_retour_reelle', 'desc')
-            ->paginate(20, ['*'], 'historique_page');
-
-        // Pénalités
-        $penalites = \App\Models\Penalite::with(['emprunt.user', 'emprunt.livre'])
-            ->orderBy('payee')
-            ->orderBy('date_creation', 'desc')
-            ->paginate(20, ['*'], 'penalites_page');
-
-        return view('emprunts.index', compact(
-            'stats',
-            'empruntsEnCours',
-            'empruntsEnRetard',
-            'historiqueEmprunts',
-            'penalites'
-        ));
     }
 }

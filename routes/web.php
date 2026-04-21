@@ -38,9 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/livres/{livre}/emprunter', [EmpruntController::class, 'store'])->name('livres.emprunter');
     Route::patch('/emprunts/{emprunt}/return', [EmpruntController::class, 'return'])->name('emprunts.return');
 
-    // Routes des emprunts (administrateur)
-    Route::get('/emprunts', [EmpruntController::class, 'index'])->name('emprunts.index');
-
     // Routes des pénalités (administrateur)
     Route::patch('/penalites/{penalite}/pay', [PenaliteController::class, 'pay'])->name('penalites.pay');
 });
