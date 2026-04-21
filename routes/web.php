@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpruntController;
+use App\Http\Controllers\PenaliteController;
 use App\Http\Controllers\LivreController;
 
 // Routes web de l'application
@@ -35,5 +36,12 @@ Route::middleware('auth')->group(function () {
     // Routes des livres
     Route::resource('livres', LivreController::class);
     Route::post('/livres/{livre}/emprunter', [EmpruntController::class, 'store'])->name('livres.emprunter');
+    Route::patch('/emprunts/{emprunt}/return', [EmpruntController::class, 'return'])->name('emprunts.return');
+
+    // Routes des emprunts (administrateur)
+    Route::get('/emprunts', [EmpruntController::class, 'index'])->name('emprunts.index');
+
+    // Routes des pénalités (administrateur)
+    Route::patch('/penalites/{penalite}/pay', [PenaliteController::class, 'pay'])->name('penalites.pay');
 });
 
