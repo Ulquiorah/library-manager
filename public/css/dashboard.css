@@ -1,0 +1,8 @@
+/* Dashboard Tabs Styles */
+#adminTab {
+    gap: 0.5rem;
+}
+
+#adminTabContent {
+    margin-top: 20px;
+}

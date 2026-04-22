@@ -6,33 +6,10 @@
     <title>@yield('title', 'Bibliothèque En Ligne')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-color: #f8f9fa;
-        }
-        main {
-            flex: 1;
-        }
-        .navbar {
-            background-color: #2c3e50;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .navbar-brand, .nav-link {
-            color: white !important;
-        }
-        .nav-link:hover {
-            color: #e74c3c !important;
-        }
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin-tabs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    @stack('styles')
 </head>
 <body>
     @auth
@@ -57,7 +34,7 @@
                         <span class="nav-link">{{ auth()->user()->nom }}</span>
                     </li>
                     <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="btn btn-outline-light btn-sm">Déconnexion</button>
                         </form>

@@ -105,7 +105,7 @@
                     <!-- Onglets -->
 
                     <!-- Onglets -->
-                    <ul class="nav nav-tabs" id="adminTab" role="tablist" style="gap: 0.5rem;">
+                    <ul class="nav nav-tabs" id="adminTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active admin-tab-btn" id="livres-tab" data-bs-toggle="tab" data-bs-target="#livres" type="button" role="tab">
                                 Gérer les livres
@@ -122,42 +122,86 @@
                             </button>
                         </li>
                     </ul>
-                    <style>
-                        .admin-tab-btn {
-                            color: #222 !important;
-                            background: #fff !important;
-                            border: 1px solid #17c6f5 !important;
-                            margin-right: 0.5rem !important;
-                        }
-                        .admin-tab-btn.active {
-                            color: #222 !important;
-                            background: #eafaff !important;
-                        }
-                    </style>
 
-                    <div class="tab-content" id="adminTabContent" style="margin-top: 20px;">
+
+                    <div class="tab-content" id="adminTabContent">
                         <!-- Onglet Livres -->
                         <div class="tab-pane fade show active" id="livres" role="tabpanel">
-                            <a href="{{ route('livres.index') }}" class="btn btn-primary">
-                                <i class="fas fa-book"></i> Gérer les livres
-                            </a>
+                            <div class="d-flex justify-content-end mb-3">
+                                <a href="{{ route('livres.create') }}" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Ajouter un livre
+                                </a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Titre</th>
+                                            <th>Auteur</th>
+                                            <th>Catégorie</th>
+                                            <th>Disponibles</th>
+                                            <th>Empruntés</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($livres as $livre)
+                                        <tr>
+                                            <td>
+                                                <strong>{{ $livre->titre }}</strong>
+                                                <br>
+                                                <small class="text-muted">ISBN : {{ $livre->isbn ?? '-' }}</small>
+                                            </td>
+                                            <td>{{ $livre->auteur }}</td>
+                                            <td>{{ $livre->categorie ?? '-' }}</td>
+                                            <td>{{ $livre->quantite_disponible }}/{{ $livre->quantite }}</td>
+                                            <td>{{ $livre->empruntsCourants->count() }}</td>
+                                            <td>
+                                                <a href="{{ route('livres.show', $livre) }}" class="btn btn-outline-primary btn-sm">Voir</a>
+                                                <a href="{{ route('livres.edit', $livre) }}" class="btn btn-outline-secondary btn-sm">Modifier</a>
+                                                <form action="{{ route('livres.destroy', $livre) }}" method="POST" class="d-inline" onsubmit="return confirm('Supprimer ce livre ?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm">Supprimer</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            @if(method_exists($livres, 'links'))
+                            <div class="d-flex justify-content-center mt-3">
+                                {{ $livres->links() }}
+                            </div>
+                            @endif
+                            @if($livres->isEmpty())
+                            <div class="text-center py-5">
+                                <i class="fas fa-book fa-3x text-muted mb-3"></i>
+                                <h4 class="text-muted">Aucun livre dans la bibliothèque</h4>
+                                <p class="text-muted">Commencez par ajouter votre premier livre.</p>
+                                <a href="{{ route('livres.create') }}" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Ajouter un livre
+                                </a>
+                            </div>
+                            @endif
                         </div>
 
                         <!-- Onglet Emprunts -->
                         <div class="tab-pane fade" id="emprunts" role="tabpanel">
                             <ul class="nav nav-pills mb-3" id="empruntsSubTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="en-cours-tab" data-bs-toggle="tab" data-bs-target="#en-cours" type="button" role="tab">
+                                    <button class="nav-link active admin-tab-btn" id="en-cours-tab" data-bs-toggle="tab" data-bs-target="#en-cours" type="button" role="tab">
                                         En cours ({{ $empruntsEnCours->count() }})
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="retard-tab" data-bs-toggle="tab" data-bs-target="#retard" type="button" role="tab">
+                                    <button class="nav-link admin-tab-btn" id="retard-tab" data-bs-toggle="tab" data-bs-target="#retard" type="button" role="tab">
                                         En retard ({{ $empruntsEnRetard->count() }})
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="historique-tab" data-bs-toggle="tab" data-bs-target="#historique" type="button" role="tab">
+                                    <button class="nav-link admin-tab-btn" id="historique-tab" data-bs-toggle="tab" data-bs-target="#historique" type="button" role="tab">
                                         Historique
                                     </button>
                                 </li>

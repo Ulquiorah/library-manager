@@ -1,0 +1,38 @@
+.nav-tabs .nav-link {
+    color: #222 !important;
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd !important;
+    margin-right: 0.5rem !important;
+}
+.nav-tabs .nav-link.active {
+    color: white !important;
+    background: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+
+/* Styles for nav-pills (sub-tabs) */
+.nav-pills .nav-link {
+    color: #222 !important;
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd !important;
+    margin-right: 0.5rem !important;
+}
+.nav-pills .nav-link.active {
+    color: white !important;
+    background: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+
+.admin-tab-btn,
+.nav-link.admin-tab-btn {
+    color: #222 !important;
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd !important;
+    margin-right: 0.5rem !important;
+}
+.admin-tab-btn.active,
+.nav-link.admin-tab-btn.active {
+    color: white !important;
+    background: #0d6efd !important;
+    border-color: #0d6efd !important;
+}

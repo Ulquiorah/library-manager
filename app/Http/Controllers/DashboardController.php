@@ -63,6 +63,8 @@ class DashboardController extends Controller
                 ->orderBy('date_application', 'desc')
                 ->get();
 
+            $livres = Livre::with('empruntsCourants')->paginate(12);
+
             return view('dashboard.index', compact(
                 'user',
                 'borrowedBooks',
@@ -74,7 +76,8 @@ class DashboardController extends Controller
                 'empruntsEnCours',
                 'empruntsEnRetard',
                 'historiqueEmprunts',
-                'penalites'
+                'penalites',
+                'livres'
             ));
         } else {
             // Vue utilisateur simple : seulement ses emprunts
