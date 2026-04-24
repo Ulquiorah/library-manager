@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Emprunt;
 use App\Models\Livre;
 use App\Models\User;
+use App\Services\PenaltyService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,7 @@ class EmpruntController extends Controller
         return redirect()->back()->with('success', 'Le livre a été emprunté avec succès.');
     }
 
-    public function return(Request $request, Emprunt $emprunt)
+    public function return(Request $request, Emprunt $emprunt, PenaltyService $penaltyService)
     {
         $user = Auth::user();
 
@@ -77,21 +78,12 @@ class EmpruntController extends Controller
         // Remettre le livre à disposition
         $emprunt->livre->increment('quantite_disponible');
 
-        // Créer une pénalité si en retard
-        if ($emprunt->en_retard()) {
-            $montant = $emprunt->montant_penalite();
-            if ($montant > 0) {
-                $emprunt->penalite()->create([
-                    'montant' => $montant,
-                    'payee' => false,
-                    'date_application' => $dateRetour,
-                ]);
-            }
-        }
+        // Créer / mettre à jour la pénalité si en retard
+        $penalty = $penaltyService->syncPenaltyForLoan($emprunt->fresh(['penalite']), $dateRetour);
 
         $message = 'Le livre a été retourné avec succès.';
-        if ($emprunt->en_retard()) {
-            $message .= ' Une pénalité de ' . $emprunt->montant_penalite() . '€ a été appliquée.';
+        if ($penalty) {
+            $message .= ' Une pénalité de ' . number_format($penalty->montant, 2, ',', ' ') . '€ a été appliquée.';
         }
 
         return redirect()->back()->with('success', $message);

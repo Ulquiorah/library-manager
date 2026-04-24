@@ -16,7 +16,10 @@ class PenaliteController extends Controller
             return redirect()->back()->with('error', 'Accès non autorisé.');
         }
 
-        $penalite->update(['payee' => true]);
+        $penalite->update([
+            'payee' => true,
+            'date_paiement' => now(),
+        ]);
 
         return redirect()->back()->with('success', 'Pénalité marquée comme payée.');
     }

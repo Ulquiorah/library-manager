@@ -48,30 +48,39 @@ class Emprunt extends Model
      * Accesseurs
      */
 
-    public function jours_retard()
+    public function jours_retard(?Carbon $referenceDate = null)
     {
+        $referenceDate ??= now();
+
         if ($this->statut === 'retourne') {
-            $retard = $this->date_retour_reelle->diffInDays($this->date_retour_prevue);
-            return $retard > 0 ? $retard : 0;
+            if (!$this->date_retour_reelle || !$this->date_retour_prevue) {
+                return 0;
+            }
+
+            if ($this->date_retour_reelle->lessThanOrEqualTo($this->date_retour_prevue)) {
+                return 0;
+            }
+
+            return $this->date_retour_prevue->diffInDays($this->date_retour_reelle);
         }
 
-        if ($this->date_retour_prevue->isPast()) {
-            return $this->date_retour_prevue->diffInDays(now());
+        if ($this->date_retour_prevue && $referenceDate->greaterThan($this->date_retour_prevue)) {
+            return $this->date_retour_prevue->diffInDays($referenceDate);
         }
 
         return 0;
     }
 
-    public function montant_penalite()
+    public function montant_penalite(?Carbon $referenceDate = null)
     {
-        $jours = $this->jours_retard();
+        $jours = $this->jours_retard($referenceDate);
         $montant = $jours * config('library.penalty_per_day');
         return min($montant, config('library.max_penalty_amount'));
     }
 
-    public function en_retard()
+    public function en_retard(?Carbon $referenceDate = null)
     {
-        return $this->jours_retard() > 0;
+        return $this->jours_retard($referenceDate) > 0;
     }
 }
 

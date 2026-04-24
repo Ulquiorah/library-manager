@@ -6,6 +6,7 @@ use App\Models\Emprunt;
 use App\Models\Livre;
 use App\Models\Penalite;
 use App\Models\User;
+use App\Services\PenaltyService;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,10 +14,13 @@ class DashboardController extends Controller
     /**
      * Display the dashboard
      */
-    public function index()
+    public function index(PenaltyService $penaltyService)
     {
         /** @var User|null $user */
         $user = auth()->user();
+
+        // Mettre à jour les pénalités des emprunts en retard avant d'afficher les compteurs
+        $penaltyService->syncOverduePenalties();
 
         if ($user->role_id >= 2) {
             // Vue administrateur/bibliothécaire : tous les emprunts en cours
@@ -64,7 +68,7 @@ class DashboardController extends Controller
     /**
      * Display the administration page.
      */
-    public function administration()
+    public function administration(PenaltyService $penaltyService)
     {
         /** @var User|null $user */
         $user = auth()->user();
@@ -72,6 +76,8 @@ class DashboardController extends Controller
         if (!$user || $user->role_id < 2) {
             abort(403);
         }
+
+        $penaltyService->syncOverduePenalties();
 
         $livres = Livre::with('empruntsCourants')->paginate(12);
 
