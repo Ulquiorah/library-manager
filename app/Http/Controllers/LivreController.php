@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Livre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,8 @@ class LivreController extends Controller
      */
     public function create()
     {
-        return view('livres.create');
+        $categories = Categorie::orderBy('nom')->get();
+        return view('livres.create', compact('categories'));
     }
 
     /**
@@ -36,7 +38,7 @@ class LivreController extends Controller
             'auteur' => 'required|string|max:255',
             'isbn' => 'nullable|string|max:20',
             'description' => 'nullable|string',
-            'categorie' => 'nullable|string|max:100',
+            'categorie' => 'nullable|string|max:100|exists:categories,nom',
             'date_publication' => 'nullable|date',
             'quantite' => 'required|integer|min:1',
             'resume' => 'nullable|string',
@@ -75,7 +77,8 @@ class LivreController extends Controller
      */
     public function edit(Livre $livre)
     {
-        return view('livres.edit', compact('livre'));
+        $categories = Categorie::orderBy('nom')->get();
+        return view('livres.edit', compact('livre', 'categories'));
     }
 
     /**
@@ -88,7 +91,7 @@ class LivreController extends Controller
             'auteur' => 'required|string|max:255',
             'isbn' => 'nullable|string|max:20',
             'description' => 'nullable|string',
-            'categorie' => 'nullable|string|max:100',
+            'categorie' => 'nullable|string|max:100|exists:categories,nom',
             'date_publication' => 'nullable|date',
             'quantite' => 'required|integer|min:1',
             'resume' => 'nullable|string',

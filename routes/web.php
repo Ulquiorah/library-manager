@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpruntController;
 use App\Http\Controllers\PenaliteController;
 use App\Http\Controllers\LivreController;
+use App\Http\Controllers\CategorieController;
 
 // Routes web de l'application
 
@@ -32,6 +33,11 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/administration', [DashboardController::class, 'administration'])->name('administration');
+    Route::get('/categories', [CategorieController::class, 'index'])->name('categories');
+    Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
+    Route::patch('/categories/{categorie}', [CategorieController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{categorie}', [CategorieController::class, 'destroy'])->name('categories.destroy');
 
     // Routes des livres
     Route::resource('livres', LivreController::class);

@@ -27,18 +27,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">Tableau de bord</a>
                     </li>
+                    @if(auth()->user()->role_id >= 2)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('administration') }}">Administration</a>
+                    </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('livres.index') }}">Livres</a>
                     </li>
                     <li class="nav-item">
                         <span class="nav-link">{{ auth()->user()->nom }}</span>
                     </li>
+                    @if(auth()->user()->role_id < 2)
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="btn btn-outline-light btn-sm">Déconnexion</button>
                         </form>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -46,7 +53,7 @@
     @endauth
 
     <!-- Main Content -->
-    <main class="py-4">
+    <main class="@yield('main_class', 'py-4')">
         @if ($errors->any())
         <div class="container">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -74,7 +81,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mt-5">
+    <footer class="@yield('footer_class', 'mt-5')">
         <div class="container">
             <p>&copy; 2026 Bibliothèque En Ligne. Tous droits réservés.</p>
         </div>

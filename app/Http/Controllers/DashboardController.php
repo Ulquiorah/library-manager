@@ -32,52 +32,13 @@ class DashboardController extends Controller
                 ->count();
             $pendingPenalties = Penalite::where('payee', false)->sum('montant');
 
-            // Données pour la section d'administration
-            $stats = [
-                'total_emprunts' => Emprunt::count(),
-                'emprunts_en_cours' => Emprunt::where('statut', 'en_cours')->count(),
-                'emprunts_en_retard' => Emprunt::where('statut', 'en_cours')
-                    ->where('date_retour_prevue', '<', now())->count(),
-                'penalites_total' => Penalite::where('payee', false)->sum('montant'),
-            ];
-
-            $empruntsEnCours = Emprunt::with(['user', 'livre'])
-                ->where('statut', 'en_cours')
-                ->orderBy('date_retour_prevue')
-                ->get();
-
-            $empruntsEnRetard = Emprunt::with(['user', 'livre'])
-                ->where('statut', 'en_cours')
-                ->where('date_retour_prevue', '<', now())
-                ->orderBy('date_retour_prevue')
-                ->get();
-
-            $historiqueEmprunts = Emprunt::with(['user', 'livre', 'penalite'])
-                ->where('statut', '!=', 'en_cours')
-                ->orderBy('date_retour_reelle', 'desc')
-                ->limit(50)
-                ->get();
-
-            $penalites = Penalite::with(['emprunt.user', 'emprunt.livre'])
-                ->orderBy('payee')
-                ->orderBy('date_application', 'desc')
-                ->get();
-
-            $livres = Livre::with('empruntsCourants')->paginate(12);
-
             return view('dashboard.index', compact(
                 'user',
                 'borrowedBooks',
                 'availableBooks',
                 'overdueReturns',
                 'pendingPenalties',
-                'currentLoans',
-                'stats',
-                'empruntsEnCours',
-                'empruntsEnRetard',
-                'historiqueEmprunts',
-                'penalites',
-                'livres'
+                'currentLoans'
             ));
         } else {
             // Vue utilisateur simple : seulement ses emprunts
@@ -98,5 +59,50 @@ class DashboardController extends Controller
                 'currentLoans'
             ));
         }
+    }
+
+    /**
+     * Display the administration page.
+     */
+    public function administration()
+    {
+        /** @var User|null $user */
+        $user = auth()->user();
+
+        if (!$user || $user->role_id < 2) {
+            abort(403);
+        }
+
+        $livres = Livre::with('empruntsCourants')->paginate(12);
+
+        $empruntsEnCours = Emprunt::with(['user', 'livre'])
+            ->where('statut', 'en_cours')
+            ->orderBy('date_retour_prevue')
+            ->get();
+
+        $empruntsEnRetard = Emprunt::with(['user', 'livre'])
+            ->where('statut', 'en_cours')
+            ->where('date_retour_prevue', '<', now())
+            ->orderBy('date_retour_prevue')
+            ->get();
+
+        $historiqueEmprunts = Emprunt::with(['user', 'livre', 'penalite'])
+            ->where('statut', '!=', 'en_cours')
+            ->orderBy('date_retour_reelle', 'desc')
+            ->limit(50)
+            ->get();
+
+        $penalites = Penalite::with(['emprunt.user', 'emprunt.livre'])
+            ->orderBy('payee')
+            ->orderBy('date_application', 'desc')
+            ->get();
+
+        return view('administration.index', compact(
+            'livres',
+            'empruntsEnCours',
+            'empruntsEnRetard',
+            'historiqueEmprunts',
+            'penalites'
+        ));
     }
 }
