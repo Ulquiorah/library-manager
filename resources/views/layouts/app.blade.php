@@ -27,11 +27,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">Tableau de bord</a>
                     </li>
-                    @if(auth()->user()->role_id >= 2)
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('administration') }}">Administration</a>
-                    </li>
-                    @endif
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('livres.index') }}">Livres</a>
                     </li>
@@ -69,7 +64,7 @@
         @endif
 
         @if (session('success'))
-        <div class="container">
+        <div class="container app-floating-alert">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>

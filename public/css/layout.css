@@ -37,3 +37,18 @@ footer {
 form[action*="logout"] {
     display: inline;
 }
+
+.app-floating-alert {
+    position: fixed;
+    top: 68px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1055;
+    pointer-events: none;
+}
+
+.app-floating-alert .alert {
+    pointer-events: auto;
+    margin-bottom: 0;
+    min-width: min(900px, calc(100vw - 2rem));
+}

@@ -23,9 +23,9 @@
                     <h5 class="mb-0">Ajouter une catégorie</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('categories.store') }}" method="POST" class="row g-2">
+                    <form action="{{ route('categories.store') }}" method="POST" class="row g-2 justify-content-center align-items-start">
                         @csrf
-                        <div class="col-md-8">
+                        <div class="col-md-6 col-lg-5">
                             <input
                                 type="text"
                                 name="nom"
@@ -38,8 +38,8 @@
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-4 d-grid">
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <div class="col-md-auto d-grid">
+                            <button type="submit" class="btn btn-primary px-4">Ajouter</button>
                         </div>
                     </form>
                 </div>
