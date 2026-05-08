@@ -31,6 +31,11 @@ class Livre extends Model
      * Relations
      */
 
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class, 'categorie', 'nom');
+    }
+
     public function emprunts()
     {
         return $this->hasMany(Emprunt::class);

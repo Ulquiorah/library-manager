@@ -52,16 +52,8 @@
                     <p class="text-muted">Gérez les rôles et permissions des utilisateurs</p>
                 </div>
                 <div class="col-md-4 text-md-end">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fas fa-filter me-1"></i>Filtrer
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('users.index') }}">Tous les utilisateurs</a></li>
-                            <li><a class="dropdown-item" href="{{ route('users.index', ['role' => 1]) }}">Utilisateurs simples</a></li>
-                            <li><a class="dropdown-item" href="{{ route('users.index', ['role' => 2]) }}">Bibliothécaires</a></li>
-                            <li><a class="dropdown-item" href="{{ route('users.index', ['role' => 3]) }}">Administrateurs</a></li>
-                        </ul>
+                    <div class="badge bg-primary">
+                        <i class="fas fa-users me-1"></i>{{ $users->total() }} utilisateur(s)
                     </div>
                 </div>
             </div>

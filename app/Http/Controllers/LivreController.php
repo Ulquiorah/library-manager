@@ -12,11 +12,31 @@ class LivreController extends Controller
     /**
      * Afficher la liste des livres
      */
-    public function index()
+    public function index(Request $request)
     {
-        $livres = Livre::with('empruntsCourants')->paginate(12);
+        $query = Livre::with('empruntsCourants', 'categorie');
+        
+        // Recherche par titre ou éditeur
+        if ($request->filled('search')) {
+            $searchTerm = $request->get('search');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('titre', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('auteur', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('editeur', 'like', '%' . $searchTerm . '%');
+            });
+        }
+        
+        // Filtre par catégorie
+        if ($request->filled('categorie')) {
+            $query->whereHas('categorie', function($q) use ($request) {
+                $q->where('nom', $request->get('categorie'));
+            });
+        }
+        
+        $livres = $query->paginate(12)->withQueryString();
+        $categories = Categorie::orderBy('nom')->get();
 
-        return view('livres.index', compact('livres'));
+        return view('livres.index', compact('livres', 'categories'));
     }
 
     /**

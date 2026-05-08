@@ -17,6 +17,53 @@
         </div>
     </div>
 
+    <!-- Barre de recherche et filtres -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="GET" action="{{ route('livres.index') }}" class="row g-3">
+                        <div class="col-md-5">
+                            <label for="search" class="form-label">
+                                <i class="fas fa-search me-1"></i>Rechercher
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="search" 
+                                   name="search" 
+                                   value="{{ request()->get('search') }}"
+                                   placeholder="Titre, auteur ou éditeur...">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="categorie" class="form-label">
+                                <i class="fas fa-tag me-1"></i>Catégorie
+                            </label>
+                            <select class="form-select" id="categorie" name="categorie">
+                                <option value="">Toutes les catégories</option>
+                                @foreach($categories as $categorie)
+                                    <option value="{{ $categorie->nom }}" 
+                                            {{ request()->get('categorie') == $categorie->nom ? 'selected' : '' }}>
+                                        {{ $categorie->nom }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <div class="btn-group w-100">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-filter me-1"></i>Filtrer
+                                </button>
+                                <a href="{{ route('livres.index') }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-1"></i>Réinitialiser
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         @foreach($livres as $livre)
         <div class="col-md-4 mb-4">
