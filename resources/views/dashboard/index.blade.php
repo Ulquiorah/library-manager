@@ -106,9 +106,9 @@
             @if(auth()->user()->role_id >= 2)
             <div class="row mt-4">
                 <div class="col-md-12">
-                    <div class="alert alert-info mb-0">
+                    <!-- <div class="alert alert-info mb-0">
                         Utilisez la sidebar pour naviguer entre <strong>Général</strong>, <strong>Administration</strong> et <strong>Catégories</strong>.
-                    </div>
+                    </div> -->
                 </div>
             </div>
             @endif

@@ -43,7 +43,7 @@ class LivreController extends Controller
             'quantite' => 'required|integer|min:1',
             'resume' => 'nullable|string',
             'editeur' => 'nullable|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $validated['quantite_disponible'] = $validated['quantite'];

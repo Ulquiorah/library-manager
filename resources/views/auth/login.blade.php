@@ -61,11 +61,11 @@
                 </div>
             </div>
 
-            <div class="alert alert-info mt-4" role="alert">
+            <!-- <div class="alert alert-info mt-4" role="alert">
                 <strong>Compte de test :</strong><br>
                 Email: admin@example.com<br>
                 Mot de passe: password
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

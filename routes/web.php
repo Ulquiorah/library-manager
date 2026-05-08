@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmpruntController;
 use App\Http\Controllers\PenaliteController;
 use App\Http\Controllers\LivreController;
@@ -15,7 +16,13 @@ use App\Http\Controllers\CategorieController;
 // Routes publiques
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('dashboard');
+        $user = auth()->user();
+        // Rediriger selon le rôle de l'utilisateur
+        if ($user->role_id === 1) {
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('dashboard');
+        }
     }
     return redirect()->route('login');
 });
@@ -32,8 +39,15 @@ Route::middleware('guest')->group(function () {
 // Routes protégées (auth middleware)
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LogoutController::class, 'destroy'])->name('logout');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/administration', [DashboardController::class, 'administration'])->name('administration');
+    
+    // Route d'accueil pour les utilisateurs simples (role_id = 1)
+    Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('check.role:1');
+    
+    // Routes pour les administrateurs/bibliothécaires (role_id >= 2)
+    Route::middleware('check.role:2,3')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/administration', [DashboardController::class, 'administration'])->name('administration');
+    });
     Route::get('/categories', [CategorieController::class, 'index'])->name('categories');
     Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
     Route::patch('/categories/{categorie}', [CategorieController::class, 'update'])->name('categories.update');
