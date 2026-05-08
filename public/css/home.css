@@ -24,7 +24,7 @@
 /* Header */
 .home-header {
     background: white;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #e5e7eb;
     padding: 2rem 0;
     position: sticky;
     top: 0;
@@ -343,11 +343,80 @@ section {
 
 /* Books Carousel */
 .books-carousel {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: none;
+}
+
+/* Books Slider */
+.books-slider-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    margin-bottom: 0;
+}
+
+.books-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
     gap: 1.5rem;
 }
 
+.books-slider .book-card {
+    flex: 0 0 300px;
+    min-width: 300px;
+}
+
+/* Slider Controls */
+.slider-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.slider-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: white;
+    color: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.slider-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Slider Dots */
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
+}
+
+/* Book Cards */
 .book-card {
     background: white;
     border: 1px solid var(--border-color);
@@ -534,7 +603,7 @@ section {
     }
     
     .books-carousel {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        display: none;
     }
     
     .section-header {

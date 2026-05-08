@@ -6,548 +6,6 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/home.css') }}" type="text/css">
-<style>
-/* Vérification que le CSS est bien chargé */
-.home-container {
-    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
-    min-height: 100vh;
-}
-
-.home-header {
-    background: white;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 2rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.header-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-}
-
-.welcome-section {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.welcome-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #4f46e5, #6366f1);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.welcome-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin: 0;
-}
-
-.welcome-subtitle {
-    color: #6b7280;
-    margin: 0.25rem 0 0 0;
-}
-
-.header-stats {
-    display: flex;
-    gap: 2rem;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.stat-item i {
-    font-size: 1.25rem;
-    color: #4f46e5;
-    margin-bottom: 0.25rem;
-}
-
-.stat-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1f2937;
-    line-height: 1;
-}
-
-.stat-label {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin-top: 0.25rem;
-}
-
-.home-main {
-    padding: 3rem 0;
-}
-
-section {
-    margin-bottom: 3rem;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.section-title i {
-    color: #4f46e5;
-}
-
-.actions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.action-card {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-}
-
-.action-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    border-color: #4f46e5;
-}
-
-.action-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, #4f46e5, #6366f1);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
-
-.action-card h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 0.5rem 0;
-}
-
-.action-card p {
-    color: #6b7280;
-    margin: 0;
-    font-size: 0.875rem;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 3rem;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-}
-
-.empty-icon {
-    width: 80px;
-    height: 80px;
-    background: #f9fafb;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    color: #9ca3af;
-    font-size: 2rem;
-}
-
-.empty-state h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 0.5rem 0;
-}
-
-.empty-state p {
-    color: #6b7280;
-    margin: 0 0 1.5rem 0;
-}
-
-.loans-grid {
-    display: grid;
-    gap: 1.5rem;
-}
-
-.loan-card {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    gap: 1.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.loan-card:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.loan-cover {
-    flex-shrink: 0;
-    width: 80px;
-    height: 120px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #f9fafb;
-}
-
-.loan-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.cover-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9ca3af;
-    font-size: 2rem;
-}
-
-.loan-details {
-    flex: 1;
-}
-
-.book-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 0.5rem 0;
-}
-
-.book-author {
-    color: #6b7280;
-    margin: 0 0 1rem 0;
-    font-size: 0.875rem;
-}
-
-.loan-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.return-date {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #6b7280;
-    font-size: 0.875rem;
-}
-
-.return-date i {
-    color: #4f46e5;
-}
-
-.status-badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.status-badge.active {
-    background: #dcfce7;
-    color: #10b981;
-}
-
-.status-badge.overdue {
-    background: #fef3c7;
-    color: #f59e0b;
-}
-
-.section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-}
-
-.loans-count {
-    background: #4f46e5;
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.view-all-link {
-    color: #4f46e5;
-    text-decoration: none;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.view-all-link:hover {
-    gap: 0.75rem;
-    color: #4338ca;
-}
-
-.books-carousel {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.book-card {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.book-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.book-cover {
-    position: relative;
-    height: 200px;
-    background: #f9fafb;
-}
-
-.book-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.availability-badge {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.availability-badge.available {
-    background: #dcfce7;
-    color: #10b981;
-}
-
-.availability-badge.unavailable {
-    background: #fee2e2;
-    color: #ef4444;
-}
-
-.book-info {
-    padding: 1rem;
-}
-
-.book-info .book-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 0.5rem 0;
-    line-height: 1.3;
-}
-
-.book-info .book-author {
-    color: #6b7280;
-    margin: 0 0 1rem 0;
-    font-size: 0.875rem;
-    line-height: 1.3;
-}
-
-.book-actions {
-    margin-top: auto;
-}
-
-.borrow-form {
-    display: inline;
-}
-
-.alerts-container {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 400px;
-}
-
-.alert {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1rem;
-    display: flex;
-    gap: 1rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    animation: slideIn 0.3s ease-out;
-}
-
-.alert-warning {
-    border-left: 4px solid #f59e0b;
-}
-
-.alert-danger {
-    border-left: 4px solid #ef4444;
-}
-
-.alert-icon {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-}
-
-.alert-warning .alert-icon {
-    background: #fef3c7;
-    color: #f59e0b;
-}
-
-.alert-danger .alert-icon {
-    background: #fee2e2;
-    color: #ef4444;
-}
-
-.alert-content h4 {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 0.25rem 0;
-}
-
-.alert-content p {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin: 0;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 1.5rem;
-    }
-    
-    .welcome-section {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .welcome-title {
-        font-size: 1.5rem;
-    }
-    
-    .header-stats {
-        justify-content: center;
-    }
-    
-    .home-main {
-        padding: 2rem 0;
-    }
-    
-    .actions-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .loans-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .books-carousel {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-    
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-    
-    .alerts-container {
-        position: static;
-        margin: 2rem 1rem;
-        max-width: none;
-    }
-    
-    .loan-card {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .loan-cover {
-        width: 100%;
-        height: 200px;
-        margin: 0 auto 1rem;
-    }
-    
-    .loan-info {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-}
-</style>
 @endpush
 
 @section('content')
@@ -582,39 +40,7 @@ section {
     <!-- Main Content -->
     <main class="home-main">
         <div class="container">
-            <!-- Quick Actions -->
-            <section class="quick-actions">
-                <h2 class="section-title">
-                    <i class="fas fa-bolt"></i>
-                    Actions rapides
-                </h2>
-                <div class="actions-grid">
-                    <a href="{{ route('livres.index') }}" class="action-card">
-                        <div class="action-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <h3>Rechercher un livre</h3>
-                        <p>Parcourez notre catalogue</p>
-                    </a>
-                    
-                    <a href="{{ route('livres.index') }}" class="action-card">
-                        <div class="action-icon">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <h3>Nouveautés</h3>
-                        <p>Découvrez les derniers ajouts</p>
-                    </a>
-                    
-                    <div class="action-card" onclick="showLoansHistory()">
-                        <div class="action-icon">
-                            <i class="fas fa-history"></i>
-                        </div>
-                        <h3>Historique</h3>
-                        <p>Vos emprunts passés</p>
-                    </div>
-                </div>
-            </section>
-
+            
             <!-- Current Loans -->
             <section class="current-loans">
                 <div class="section-header">
@@ -685,9 +111,14 @@ section {
                         <i class="fas fa-sparkles"></i>
                         Nouveautés
                     </h2>
-                    <a href="{{ route('livres.index') }}" class="view-all-link">
-                        Voir tout <i class="fas fa-arrow-right"></i>
-                    </a>
+                    <div class="slider-controls">
+                        <button class="slider-btn prev" onclick="slideBooks(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="slider-btn next" onclick="slideBooks(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
                 
                 @if($recentBooks->isEmpty())
@@ -699,49 +130,56 @@ section {
                         <p>Revenez bientôt pour découvrir les derniers ajouts</p>
                     </div>
                 @else
-                    <div class="books-carousel">
-                        @foreach($recentBooks->take(6) as $book)
-                            <div class="book-card">
-                                <div class="book-cover">
-                                    @if($book->photo)
-                                        <img src="{{ asset('storage/' . $book->photo) }}" alt="{{ $book->titre }}">
-                                    @else
-                                        <div class="cover-placeholder">
-                                            <i class="fas fa-book"></i>
-                                        </div>
-                                    @endif>
-                                    @if($book->quantite_disponible > 0)
-                                        <div class="availability-badge available">
-                                            <i class="fas fa-check"></i>
-                                            Disponible
-                                        </div>
-                                    @else
-                                        <div class="availability-badge unavailable">
-                                            <i class="fas fa-times"></i>
-                                            Indisponible
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="book-info">
-                                    <h4 class="book-title">{{ Str::limit($book->titre, 25) }}</h4>
-                                    <p class="book-author">{{ $book->auteur ?? 'Auteur inconnu' }}</p>
-                                    <div class="book-actions">
-                                        @if($book->quantite_disponible > 0)
-                                            <form method="POST" action="{{ route('livres.emprunter', $book->id) }}" class="borrow-form">
-                                                @csrf
-                                                <button type="submit" class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-hand-holding-heart me-1"></i>Emprunter
-                                                </button>
-                                            </form>
+                    <div class="books-slider-container">
+                        <div class="books-slider" id="booksSlider">
+                            @foreach($recentBooks->take(6) as $book)
+                                <div class="book-card">
+                                    <div class="book-cover">
+                                        @if($book->photo)
+                                            <img src="{{ asset('storage/' . $book->photo) }}" alt="{{ $book->titre }}">
                                         @else
-                                            <button class="btn btn-secondary btn-sm" disabled>
-                                                <i class="fas fa-ban me-1"></i>Indisponible
-                                            </button>
+                                            <div class="cover-placeholder">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                        @endif
+                                        @if($book->quantite_disponible > 0)
+                                            <div class="availability-badge available">
+                                                <i class="fas fa-check"></i>
+                                                Disponible
+                                            </div>
+                                        @else
+                                            <div class="availability-badge unavailable">
+                                                <i class="fas fa-times"></i>
+                                                Indisponible
+                                            </div>
                                         @endif
                                     </div>
+                                    <div class="book-info">
+                                        <h4 class="book-title">{{ Str::limit($book->titre, 25) }}</h4>
+                                        <p class="book-author">{{ $book->auteur ?? 'Auteur inconnu' }}</p>
+                                        <div class="book-actions">
+                                            @if($book->quantite_disponible > 0)
+                                                <form method="POST" action="{{ route('livres.emprunter', $book->id) }}" class="borrow-form">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-hand-holding-heart me-1"></i>Emprunter
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <button class="btn btn-secondary btn-sm" disabled>
+                                                    <i class="fas fa-ban me-1"></i>Indisponible
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="slider-dots">
+                        <span class="dot active" onclick="goToSlide(0)"></span>
+                        <span class="dot" onclick="goToSlide(1)"></span>
+                        <span class="dot" onclick="goToSlide(2)"></span>
                     </div>
                 @endif
             </section>
@@ -779,9 +217,71 @@ section {
 </div>
 
 <script>
-function showLoansHistory() {
-    // Rediriger vers l'historique des emprunts
-    window.location.href = '{{ route("livres.index") }}';
+let currentSlide = 0;
+const totalSlides = 3; // Seulement 3 slides pour 3 points
+
+function slideBooks(direction) {
+    const slider = document.getElementById('booksSlider');
+    const maxSlide = totalSlides - 1;
+    
+    currentSlide += direction;
+    
+    if (currentSlide < 0) {
+        currentSlide = maxSlide;
+    } else if (currentSlide > maxSlide) {
+        currentSlide = 0;
+    }
+    
+    updateSlider();
+    updateDots();
+}
+
+function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    updateSlider();
+    updateDots();
+}
+
+function updateSlider() {
+    const slider = document.getElementById('booksSlider');
+    const slideWidth = 316; // 300px + 16px gap
+    slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+}
+
+function updateDots() {
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
+}
+
+// Auto-slide every 5 seconds
+setInterval(() => {
+    slideBooks(1);
+}, 5000);
+
+// Touch support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+const sliderContainer = document.querySelector('.books-slider-container');
+if (sliderContainer) {
+    sliderContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    sliderContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+}
+
+function handleSwipe() {
+    if (touchEndX < touchStartX - 50) {
+        slideBooks(1); // Swipe left
+    } else if (touchEndX > touchStartX + 50) {
+        slideBooks(-1); // Swipe right
+    }
 }
 </script>
 @endsection

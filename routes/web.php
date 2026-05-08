@@ -28,6 +28,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+
 // Routes d'authentification (guest middleware)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
@@ -44,9 +45,11 @@ Route::middleware('auth')->group(function () {
     // Route d'accueil pour les utilisateurs simples (role_id = 1)
     Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('check.role:1');
     
+    // Route dashboard accessible à tous les utilisateurs authentifiés
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
     // Routes pour les administrateurs/bibliothécaires (role_id >= 2)
     Route::middleware('check.role:2,3')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/administration', [DashboardController::class, 'administration'])->name('administration');
         
         // Routes pour la gestion des utilisateurs

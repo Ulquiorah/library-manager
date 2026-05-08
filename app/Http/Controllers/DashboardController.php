@@ -45,16 +45,29 @@ class DashboardController extends Controller
                 'currentLoans'
             ));
         } else {
-            // Vue utilisateur simple : seulement ses emprunts
-            $borrowedBooks = Emprunt::where('statut', 'en_cours')->count();
-            $availableBooks = Livre::where('quantite_disponible', '>', 0)->count();
-            $overdueReturns = Emprunt::where('statut', 'en_cours')
+            // Vue utilisateur : seulement ses propres informations
+            $myCurrentLoans = Emprunt::with('livre')
+                ->where('user_id', $user->id)
+                ->where('statut', 'en_cours')
+                ->orderBy('date_retour_prevue')
+                ->get();
+
+            $myOverdueReturns = Emprunt::where('user_id', $user->id)
+                ->where('statut', 'en_cours')
                 ->where('date_retour_prevue', '<', now())
                 ->count();
-            $pendingPenalties = $user->penalites()->where('payee', false)->sum('montant');
-            $currentLoans = $user->emprunts()->where('statut', 'en_cours')->with('livre')->get();
 
-            return view('dashboard.index', compact(
+            $myPendingPenalties = Penalite::whereHas('emprunt', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->where('payee', false)->sum('montant');
+
+            $borrowedBooks = $myCurrentLoans->count();
+            $availableBooks = Livre::where('quantite_disponible', '>', 0)->count();
+            $overdueReturns = $myOverdueReturns;
+            $pendingPenalties = $myPendingPenalties;
+            $currentLoans = $myCurrentLoans;
+
+            return view('dashboard.user', compact(
                 'user',
                 'borrowedBooks',
                 'availableBooks',
