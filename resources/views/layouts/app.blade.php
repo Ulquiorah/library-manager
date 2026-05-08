@@ -40,22 +40,14 @@
                     <li class="nav-item">
                         <span class="nav-link">{{ auth()->user()->nom }}</span>
                     </li>
-                    @if(auth()->user()->role_id < 2)
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-light btn-sm">Déconnexion</button>
-                        </form>
-                    </li>
-                    @endif
-                </ul>
+                                    </ul>
             </div>
         </div>
     </nav>
     @endauth
 
     <!-- Main Content -->
-    <main class="@yield('main_class', 'py-4')">
+    <main class="@yield('main_class')">
         @if ($errors->any())
         <div class="container">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -83,11 +75,31 @@
     </main>
 
     <!-- Footer -->
-    <footer class="@yield('footer_class', 'mt-5')">
-        <div class="container">
-            <p>&copy; 2026 Bibliothèque En Ligne. Tous droits réservés.</p>
+    <footer class="@yield('footer_class')">
+    <div class="container">
+        <div class="footer-content text-center d-flex flex-column align-items-center justify-content-center">
+            
+            <div class="copyright-section mb-3">
+                <p class="mb-0">
+                    &copy; 2026 Bibliothèque En Ligne. Tous droits réservés.
+                </p>
+            </div>
+
+            <div class="logout-section">
+                @if(auth()->check() && auth()->user()->role_id < 2)
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i>
+                        Déconnexion
+                    </button>
+                </form>
+                @endif
+            </div>
+
         </div>
-    </footer>
+    </div>
+</footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
