@@ -19,7 +19,7 @@
 .livres-container {
     background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
     min-height: 100vh;
-    padding: 2rem 4rem;
+    padding: 2rem 2rem;
     text-align: center;
 }
 
