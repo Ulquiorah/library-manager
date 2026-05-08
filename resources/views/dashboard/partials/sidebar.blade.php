@@ -16,6 +16,10 @@
                 <i class="fas fa-tools dashboard-sidebar-icon"></i>
                 Administration
             </a>
+            <a href="{{ route('users.index') }}" class="dashboard-sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                <i class="fas fa-users dashboard-sidebar-icon"></i>
+                Utilisateurs
+            </a>
             <a href="{{ route('categories') }}" class="dashboard-sidebar-link {{ request()->routeIs('categories') ? 'active' : '' }}">
                 <i class="fas fa-tags dashboard-sidebar-icon"></i>
                 Catégories
@@ -46,6 +50,10 @@
             <a href="{{ route('administration') }}" class="dashboard-sidebar-link {{ request()->routeIs('administration') ? 'active' : '' }}">
                 <i class="fas fa-tools dashboard-sidebar-icon"></i>
                 Administration
+            </a>
+            <a href="{{ route('users.index') }}" class="dashboard-sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                <i class="fas fa-users dashboard-sidebar-icon"></i>
+                Utilisateurs
             </a>
             <a href="{{ route('categories') }}" class="dashboard-sidebar-link {{ request()->routeIs('categories') ? 'active' : '' }}">
                 <i class="fas fa-tags dashboard-sidebar-icon"></i>

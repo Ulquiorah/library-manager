@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmpruntController;
 use App\Http\Controllers\PenaliteController;
 use App\Http\Controllers\LivreController;
@@ -47,6 +48,13 @@ Route::middleware('auth')->group(function () {
     Route::middleware('check.role:2,3')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/administration', [DashboardController::class, 'administration'])->name('administration');
+        
+        // Routes pour la gestion des utilisateurs
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::patch('/users/{user}/role', [UserController::class, 'updateRole'])->name('users.update.role');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });
     Route::get('/categories', [CategorieController::class, 'index'])->name('categories');
     Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
