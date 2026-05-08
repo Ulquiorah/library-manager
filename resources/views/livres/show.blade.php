@@ -2,159 +2,261 @@
 
 @section('title', $livre->titre)
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/livres-show.css') }}" type="text/css">
+@endpush
+
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">{{ $livre->titre }}</h4>
-                    <div>
-                        @if(auth()->user()->role_id >= 2)
-                        <a href="{{ route('livres.edit', $livre) }}" class="btn btn-outline-primary btn-sm">
-                            <i class="fas fa-edit"></i> Modifier
-                        </a>
-                        @endif
-                        <a href="{{ route('livres.index') }}" class="btn btn-outline-secondary btn-sm">
-                            <i class="fas fa-arrow-left"></i> Retour
-                        </a>
-                    </div>
+<div class="livre-show-container">
+    <!-- Header -->
+    <div class="livre-header">
+        <h1 class="livre-title">
+            <i class="fas fa-book"></i>
+            {{ $livre->titre }}
+        </h1>
+        <div class="livre-actions">
+            @if(auth()->user()->role_id >= 2)
+                <a href="{{ route('livres.edit', $livre) }}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit"></i>
+                    Modifier
+                </a>
+            @endif
+            <a href="{{ route('livres.index') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Retour
+            </a>
+        </div>
+    </div>
+
+    <!-- Section image -->
+    <div class="livre-image-section">
+        <div class="livre-image-container">
+            @if($livre->photo)
+                <img src="{{ asset('storage/' . $livre->photo) }}" alt="{{ $livre->titre }}" class="livre-image">
+            @else
+                <div class="image-placeholder">
+                    <i class="fas fa-book"></i>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            @if($livre->photo)
-                                <img src="{{ asset('storage/' . $livre->photo) }}" alt="{{ $livre->titre }}" class="img-fluid rounded mb-3">
-                            @else
-                                <div class="bg-light rounded d-flex align-items-center justify-content-center mb-3" style="height: 300px;">
-                                    <i class="fas fa-book fa-4x text-muted"></i>
-                                </div>
-                            @endif
+            @endif
+        </div>
+    </div>
 
-                            <h6 class="text-muted">Auteur</h6>
-                            <p class="mb-3">{{ $livre->auteur }}</p>
-
-                            @if($livre->isbn)
-                            <h6 class="text-muted">ISBN</h6>
-                            <p class="mb-3">{{ $livre->isbn }}</p>
-                            @endif
-
-                            @if($livre->categorie)
-                            <h6 class="text-muted">Catégorie</h6>
-                            <p class="mb-3">
-                                <span class="badge bg-secondary">{{ $livre->categorie }}</span>
-                            </p>
-                            @endif
-
-                            @if($livre->date_publication)
-                            <h6 class="text-muted">Date de publication</h6>
-                            <p class="mb-3">{{ $livre->date_publication->format('d/m/Y') }}</p>
-                            @endif
-
-                            @if($livre->editeur)
-                            <h6 class="text-muted">Éditeur</h6>
-                            <p class="mb-3">{{ $livre->editeur }}</p>
-                            @endif
-                        </div>
-
-                        <div class="col-md-8">
-                            @if($livre->description)
-                            <h6 class="text-muted">Description</h6>
-                            <p class="mb-3">{{ $livre->description }}</p>
-                            @endif
-
-                            @if($livre->resume)
-                            <h6 class="text-muted">Résumé</h6>
-                            <p class="mb-3">{{ $livre->resume }}</p>
-                            @endif
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <h5 class="text-success">{{ $livre->quantite_disponible }}</h5>
-                            <small class="text-muted">Disponibles</small>
-                        </div>
-                        <div class="col-md-4">
-                            <h5 class="text-primary">{{ $livre->quantite }}</h5>
-                            <small class="text-muted">Total</small>
-                        </div>
-                        <div class="col-md-4">
-                            <h5 class="text-warning">{{ $livre->empruntsCourants->count() }}</h5>
-                            <small class="text-muted">Empruntés</small>
-                        </div>
-                    </div>
+    <!-- Section informations -->
+    <div class="livre-info-grid">
+        <div class="livre-info-card">
+            <div class="info-card-header">
+                <h3 class="info-card-title">
+                    <i class="fas fa-info-circle"></i>
+                    Informations principales
+                </h3>
+            </div>
+            <div class="info-card-content">
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-user-edit"></i>
+                        Auteur
+                    </span>
+                    <span class="info-value">{{ $livre->auteur ?? 'Non spécifié' }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-barcode"></i>
+                        ISBN
+                    </span>
+                    <span class="info-value">{{ $livre->isbn ?? 'Non spécifié' }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-tag"></i>
+                        Catégorie
+                    </span>
+                    <span class="info-value">
+                        @if($livre->categorie)
+                            <span class="badge bg-secondary">{{ $livre->categorie }}</span>
+                        @else
+                            Non spécifiée
+                        @endif
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-calendar"></i>
+                        Date de publication
+                    </span>
+                    <span class="info-value">{{ $livre->date_publication ? $livre->date_publication->format('d/m/Y') : 'Non spécifiée' }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">
+                        <i class="fas fa-building"></i>
+                        Éditeur
+                    </span>
+                    <span class="info-value">{{ $livre->editeur ?? 'Non spécifié' }}</span>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <!-- Emprunts actuels -->
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="mb-0">Emprunts actuels</h6>
-                </div>
-                <div class="card-body">
-                    @if($livre->emprunts->isEmpty())
-                        <p class="text-muted text-center mb-0">Aucun emprunt en cours</p>
+        <div class="livre-info-card">
+            <div class="info-card-header">
+                <h3 class="info-card-title">
+                    <i class="fas fa-align-left"></i>
+                    Description
+                </h3>
+            </div>
+            <div class="info-card-content">
+                <div class="description-text">
+                    @if($livre->description)
+                        {{ $livre->description }}
                     @else
-                        <ul class="list-group list-group-flush">
-                            @foreach($livre->emprunts as $emprunt)
-                                <li class="list-group-item px-0">
-                                    <strong>{{ $emprunt->user->nom }}</strong>
-                                    <div class="small text-muted">
-                                        Retour prévu : {{ $emprunt->date_retour_prevue->format('d/m/Y') }}
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
+                        <em class="text-muted">Aucune description disponible</em>
                     @endif
                 </div>
             </div>
+        </div>
 
-            <!-- Actions -->
-            @if(auth()->user()->role_id >= 2)
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h6 class="mb-0">Actions administrateur</h6>
+        <div class="livre-info-card">
+            <div class="info-card-header">
+                <h3 class="info-card-title">
+                    <i class="fas fa-clipboard"></i>
+                    Résumé
+                </h3>
+            </div>
+            <div class="info-card-content">
+                <div class="description-text">
+                    @if($livre->resume)
+                        {{ $livre->resume }}
+                    @else
+                        <em class="text-muted">Aucun résumé disponible</em>
+                    @endif
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('livres.destroy', $livre) }}"
-                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')">
+            </div>
+        </div>
+    </div>
+
+    <!-- Section statistiques -->
+    <div class="livre-stats-section">
+        <div class="stats-title">
+            <i class="fas fa-chart-bar"></i>
+            Statistiques du stock
+        </div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">{{ $livre->quantite_disponible }}</div>
+                <div class="stat-label">Disponibles</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ $livre->quantite }}</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{{ $livre->empruntsCourants->count() }}</div>
+                <div class="stat-label">Empruntés</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section description détaillée -->
+    @if($livre->description)
+    <div class="livre-description-section">
+        <div class="description-title">
+            <i class="fas fa-file-alt"></i>
+            Description complète
+        </div>
+        <div class="description-text">
+            {{ $livre->description }}
+        </div>
+    </div>
+    @endif
+
+    <!-- Section résumé détaillé -->
+    @if($livre->resume)
+    <div class="livre-description-section">
+        <div class="description-title">
+            <i class="fas fa-clipboard"></i>
+            Résumé complet
+        </div>
+        <div class="description-text">
+            {{ $livre->resume }}
+        </div>
+    </div>
+    @endif
+
+    <!-- Section emprunts actuels -->
+    <div class="livre-emprunts-section">
+        <div class="emprunts-title">
+            <i class="fas fa-hand-holding-heart"></i>
+            Emprunts actuels
+        </div>
+        <div class="emprunts-list">
+            @if($livre->emprunts->isEmpty())
+                <div class="empty-emprunts">
+                    <i class="fas fa-inbox"></i>
+                    <h4>Aucun emprunt en cours</h4>
+                    <p>Ce livre n'est actuellement emprunté par aucun utilisateur.</p>
+                </div>
+            @else
+                @foreach($livre->emprunts as $emprunt)
+                    <div class="emprunt-item">
+                        <div class="emprunt-user">
+                            <i class="fas fa-user"></i>
+                            <strong>{{ $emprunt->user->nom }}</strong>
+                        </div>
+                        <div class="emprunt-date">
+                            <i class="fas fa-calendar"></i>
+                            Retour : {{ $emprunt->date_retour_prevue->format('d/m/Y') }}
+                        </div>
+                        <div class="emprunt-status">
+                            @if($emprunt->date_retour_prevue->isPast())
+                                <span class="status-en-retard">En retard</span>
+                            @else
+                                <span class="status-disponible">En cours</span>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+    </div>
+
+    <!-- Section actions -->
+    <div class="livre-actions-section">
+        <div class="actions-title">
+            <i class="fas fa-cogs"></i>
+            Actions disponibles
+        </div><br>
+        <div class="actions-grid">
+            @if(auth()->user()->role_id >= 2)
+                <form method="POST" action="{{ route('livres.destroy', $livre) }}"
+                      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="action-btn action-btn-danger">
+                        <i class="fas fa-trash"></i>
+                        Supprimer
+                    </button>
+                </form>
+            @endif
+
+            @if(auth()->user()->role_id < 2)
+                @if($livre->quantite_disponible > 0)
+                    <form action="{{ route('livres.emprunter', $livre) }}" method="POST">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm w-100">
-                            <i class="fas fa-trash"></i> Supprimer le livre
+                        <button type="submit" class="action-btn action-btn-success">
+                            <i class="fas fa-plus"></i>
+                            Emprunter
                         </button>
                     </form>
-                </div>
-            </div>
-            @else
-            <!-- Actions utilisateur -->
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h6 class="mb-0">Actions</h6>
-                </div>
-                <div class="card-body">
-                    @if(auth()->user()->role_id < 2)
-                        @if($livre->quantite_disponible > 0)
-                            <form action="{{ route('livres.emprunter', $livre) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-success btn-sm w-100 mb-2">
-                                    <i class="fas fa-plus"></i> Emprunter
-                                </button>
-                            </form>
-                        @else
-                            <button class="btn btn-secondary btn-sm w-100 mb-2" disabled>
-                                <i class="fas fa-ban"></i> Indisponible
-                            </button>
-                        @endif
-                    @endif
-                </div>
-            </div>
+                @else
+                    <button class="action-btn action-btn-secondary" disabled>
+                        <i class="fas fa-ban"></i>
+                        Indisponible
+                    </button>
+                @endif
             @endif
+
+            <a href="{{ route('livres.index') }}" class="action-btn action-btn-primary">
+                <i class="fas fa-arrow-left"></i>
+                Retour à la liste
+            </a>
         </div>
     </div>
 </div>
